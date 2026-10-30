@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@600;800;900&family=Gochi+Hand&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
 <style>
-/* Layout: a café counter with the cup and doodles, then a dark printed menu board in uneven columns, a specials chalkboard and a cup-side nutrition label below; a bottom bar holds the tray and tip jar. */
+/* Layout: a café counter with the cup and doodles, then a dark printed menu board in uneven columns and a cup-side nutrition label below; a bottom bar holds the tray and tip jar. */
 :root {
   --milk: #F1F5F8;        /* iced-milk white, cool */
   --ink: #21160F;         /* espresso */
@@ -69,7 +69,7 @@ button { font: inherit; color: inherit; }
 /* ---------- counter ---------- */
 .counter {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   gap: 20px 28px;
   align-items: end;
   padding-block: 22px 18px;
@@ -83,6 +83,20 @@ button { font: inherit; color: inherit; }
 .cup-wrap .d4 { width: 24px; height: 24px; left: 4px; bottom: 30px; transform: rotate(18deg); }
 .cup-wrap .d5 { width: 28px; height: 28px; left: 40px; top: 0; transform: rotate(-8deg); }
 .cup-wrap .d2 svg path { fill: var(--yellow); }
+.barista {
+  margin: 0; width: 150px; align-self: center;
+  background: #FFFFFF; padding: 8px 8px 6px;
+  transform: rotate(2.5deg);
+  box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 10px 18px -10px rgba(0,0,0,.45);
+  position: relative;
+}
+.barista::before {
+  content: ""; position: absolute; top: -10px; left: 50%; width: 56px; height: 18px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: var(--yellow); opacity: .85;
+}
+.barista img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 20%; }
+.barista figcaption { font-family: var(--hand); color: #21160F; text-align: center; font-size: 1.05rem; padding-top: 4px; }
 .counter h1 {
   font-family: var(--display);
   font-weight: 900;
@@ -182,7 +196,7 @@ button { font: inherit; color: inherit; }
 /* ---------- below the board ---------- */
 .below {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   margin-top: 46px;
   align-items: start;
@@ -193,18 +207,6 @@ button { font: inherit; color: inherit; }
 }
 .below .sub { font-family: var(--hand); color: var(--muted); margin: 0 0 16px; }
 
-/* specials chalkboard */
-.specials {
-  background: var(--board); color: var(--board-ink);
-  border: 8px solid var(--ice); border-radius: 4px;
-  padding: 18px 20px 20px;
-}
-.specials h2 { color: var(--board-ink); display: flex; align-items: center; gap: 10px; }
-.specials h2 .dd { width: 30px; height: 30px; color: var(--yellow); }
-.specials .sub { color: var(--board-muted); }
-.specials ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 22px; }
-.specials li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px; align-items: start; font-family: var(--hand); font-size: 1.08rem; line-height: 1.35; }
-.specials li .dd { width: 32px; height: 32px; color: var(--chalk); margin-top: 2px; }
 
 /* nutrition label */
 .nutrition {
@@ -222,13 +224,6 @@ button { font: inherit; color: inherit; }
 .nutrition dt { font-weight: 800; }
 .nutrition dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
 .nutrition .foot { border-top: 6px solid #111; font-size: .75rem; padding-top: 5px; margin: 4px 0 0; }
-.barista { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 4px 28px; align-items: start; }
-.barista h2, .barista .sub { grid-column: 1 / -1; }
-.polaroid { margin: 0; background: #FFFFFF; padding: 10px 10px 14px; box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 10px 18px -12px rgba(0,0,0,.45); transform: rotate(-2deg); max-width: 260px; }
-.polaroid img { display: block; width: 100%; height: auto; }
-.polaroid figcaption { font-family: var(--hand); color: #21160F; text-align: center; font-size: 1.15rem; margin-top: 8px; }
-.barista .bio { margin: 6px 0 0; max-width: 46ch; }
-@media (max-width: 640px) { .barista { grid-template-columns: minmax(0, 1fr); } .polaroid { max-width: 240px; } }
 .nf-col { display: grid; gap: 14px; justify-items: start; }
 .nf-col .scribble { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--muted); }
 .nf-col .scribble .dd { width: 40px; height: 26px; color: var(--doodle); }
@@ -380,7 +375,10 @@ button { font: inherit; color: inherit; }
   .below { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 640px) {
-  .counter { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 14px; padding-block: 16px 14px; }
+  .counter { grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 12px 16px; padding-block: 18px 14px; }
+  .counter .intro { grid-column: 1 / -1; }
+  .barista { width: 108px; padding: 6px 6px 4px; }
+  .barista figcaption { font-size: .85rem; white-space: nowrap; }
   .cup-wrap { width: 104px; height: 132px; }
   .cup { width: 74px; left: 15px; }
   .cup-wrap .d1 { width: 20px; height: 20px; top: 24px; }
@@ -394,7 +392,6 @@ button { font: inherit; color: inherit; }
   .signature .row .name { font-size: 1.35rem; }
   .row .price { font-size: .82rem; }
   .panel { border-left: 0; border-top: 6px solid var(--ice); }
-  .specials ul { grid-template-columns: minmax(0, 1fr); }
   .inbox b { font-size: 1.5rem; }
 }
 </style>
@@ -429,6 +426,10 @@ button { font: inherit; color: inherit; }
         <circle class="drop" cx="31" cy="152" r="1.5" fill="#9FB5BD"/>
       </svg>
     </div>
+    <figure class="barista">
+      <img src="aahan.jpg" alt="Portrait of Aahan Lulla in his school blazer" width="480" height="662">
+      <figcaption>Your barista today</figcaption>
+    </figure>
     <div class="intro">
       <p class="who">Aahan Lulla · Akola, India · Class of 2027</p>
       <h1>aahan? café</h1>
@@ -469,15 +470,6 @@ button { font: inherit; color: inherit; }
     </section>
 
     <div class="below">
-      <section class="barista" aria-labelledby="baristaTitle">
-        <h2 id="baristaTitle">Meet the barista</h2>
-        <p class="sub">The one who wrote every recipe on this board.</p>
-        <figure class="polaroid">
-          <img src="aahan.jpg" width="580" height="800" alt="Portrait of Aahan Lulla in his school blazer and tie">
-          <figcaption>Aahan Lulla, head barista</figcaption>
-        </figure>
-        <p class="bio">I'm a Grade 12 student from Akola, India, applying to study Computer Science and Computational Linguistics. I spend most of my time teaching machines to understand language, writing, speaking on stage, and making cold coffee.</p>
-      </section>
       <section class="nf-col" aria-labelledby="nfTitle">
         <div>
           <h2 id="nfTitle">Side of the cup</h2>
