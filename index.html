@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>aahan? Café</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Aahan Lulla's research, apps, writing and speaking, served as a café menu. Every drink has a story.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@600;800;900&family=Gochi+Hand&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: a café counter with the cup and doodles, then a dark printed menu board in uneven columns, a specials chalkboard and a cup-side nutrition label below; a bottom bar holds the tray and tip jar. */
+:root {
+  --milk: #F1F5F8;        /* iced-milk white, cool */
+  --ink: #21160F;         /* espresso */
+  --muted: #5E6670;
+  --doodle: #7B8892;
+  --line: #D2DCE3;
+  --board: #23180F;       /* menu board */
+  --board-ink: #F0F4F6;
+  --board-muted: #B4BEC5;
+  --chalk: #CBD5DC;
+  --leader: #5E544D;
+  --ice: #8FC4E3;         /* ice blue, secondary */
+  --yellow: #FFD84D;      /* the one accent */
+  --paper: #FBFBF8;       /* thermal paper */
+  --paper-ink: #1F1F1F;
+  --panel: #FFFFFF;
+  --sleeve: #FFD84D;
+  --display: "Sofia Sans Extra Condensed", "Arial Narrow", "Helvetica Neue Condensed", sans-serif;
+  --hand: "Gochi Hand", "Comic Neue", "Bradley Hand", cursive;
+  --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", sans-serif;
+  --receipt: "Courier Prime", "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --milk: #111417; --ink: #ECF1F4; --muted: #A3ADB5; --doodle: #85929B; --line: #2C343A;
+    --board: #1E1510; --board-ink: #F0F4F6; --board-muted: #B4BEC5; --chalk: #CBD5DC; --leader: #57504A;
+    --panel: #181D21; --sleeve: #FFD84D; --ice: #7DB6D6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --milk: #111417; --ink: #ECF1F4; --muted: #A3ADB5; --doodle: #85929B; --line: #2C343A;
+  --board: #1E1510; --board-ink: #F0F4F6; --board-muted: #B4BEC5; --chalk: #CBD5DC; --leader: #57504A;
+  --panel: #181D21; --sleeve: #FFD84D; --ice: #7DB6D6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { background: var(--milk); color: var(--ink); }
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 96px;
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.dd { display: inline-block; line-height: 0; }
+.dd svg { width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- counter ---------- */
+.counter {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 20px 28px;
+  align-items: end;
+  padding-block: 22px 18px;
+}
+.cup-wrap { position: relative; width: 170px; height: 196px; color: var(--doodle); }
+.cup { position: absolute; left: 30px; bottom: 0; width: 112px; height: auto; display: block; }
+.cup-wrap .dd { position: absolute; }
+.cup-wrap .d1 { width: 30px; height: 30px; left: 0; top: 34px; transform: rotate(-12deg); }
+.cup-wrap .d2 { width: 26px; height: 26px; right: 0; top: 6px; color: var(--ink); }
+.cup-wrap .d3 { width: 34px; height: 22px; right: -4px; top: 92px; }
+.cup-wrap .d4 { width: 24px; height: 24px; left: 4px; bottom: 30px; transform: rotate(18deg); }
+.cup-wrap .d5 { width: 28px; height: 28px; left: 40px; top: 0; transform: rotate(-8deg); }
+.cup-wrap .d2 svg path { fill: var(--yellow); }
+.counter h1 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: .9;
+  letter-spacing: .01em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.counter .lede { margin: 0; max-width: 48ch; color: var(--muted); }
+.counter .lede strong { color: var(--ink); }
+.counter .who { margin: 0 0 6px; font-size: .95rem; }
+.controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.bill-link {
+  font-family: var(--hand);
+  font-size: 1.25rem;
+  background: none; border: 0; padding: 0;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;
+  text-decoration-color: var(--yellow);
+  cursor: pointer;
+}
+.sugar { display: flex; align-items: center; gap: 10px; font-size: .9rem; }
+.sugar-label { font-family: var(--hand); font-size: 1.05rem; }
+.sugar-opts { display: inline-flex; border: 2px solid var(--ink); border-radius: 3px; overflow: hidden; }
+.sugar-opts input { position: absolute; opacity: 0; pointer-events: none; }
+.sugar-opts label { padding: 4px 10px; cursor: pointer; font-weight: 700; font-size: .85rem; }
+.sugar-opts input:checked + label { background: var(--ink); color: var(--milk); }
+.sugar-opts input:focus-visible + label { outline: 3px solid var(--yellow); outline-offset: -3px; }
+
+/* ---------- menu board ---------- */
+.board {
+  background: var(--board);
+  color: var(--board-ink);
+  border-radius: 4px;
+  padding: 20px clamp(16px, 3vw, 40px) 22px;
+}
+.board-top {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.board-top .today { font-family: var(--display); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; font-size: .95rem; color: var(--board-muted); margin: 0; }
+.hint { display: flex; align-items: flex-end; gap: 6px; font-family: var(--hand); color: var(--yellow); font-size: 1.15rem; line-height: 1.2; margin: 0; }
+.hint .dd { width: 58px; height: 36px; color: var(--yellow); transform: translateY(10px); }
+.signature {
+  border: 2px solid var(--yellow);
+  padding: 14px 16px 12px;
+  margin-bottom: 30px;
+}
+.signature .kicker { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--yellow); font-size: 1.05rem; margin: 0; }
+.signature .kicker .dd { width: 24px; height: 24px; }
+.signature .row .name { font-size: 1.7rem; }
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 34px 46px;
+}
+.sec { min-width: 0; }
+.sec.w7 { grid-column: span 7; }
+.sec.w5 { grid-column: span 5; }
+.sec.w6 { grid-column: span 6; }
+.sec h2 {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: 1.65rem;
+  line-height: 1;
+  margin: 0 0 4px;
+}
+.sec h2 .dd { width: 34px; height: 34px; color: var(--chalk); flex: none; }
+.sec .sub { font-family: var(--hand); color: var(--board-muted); margin: 0 0 10px; font-size: 1rem; }
+.rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.row {
+  display: flex; align-items: baseline; gap: 8px;
+  width: 100%;
+  background: none; border: 0; padding: 7px 0;
+  color: var(--board-ink);
+  text-align: left; cursor: pointer;
+}
+.row .name { font-family: var(--display); font-weight: 800; font-size: 1.35rem; letter-spacing: .02em; text-transform: uppercase; line-height: 1.05; }
+.row .dots { flex: 1 1 auto; min-width: 18px; border-bottom: 2px dotted var(--leader); transform: translateY(-5px); }
+.row .price { font-family: var(--receipt); font-weight: 700; white-space: nowrap; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.row:hover .name, .row:focus-visible .name { color: var(--yellow); }
+.row .small { display: block; font-family: var(--body); font-size: .8rem; text-transform: none; letter-spacing: 0; color: var(--board-muted); font-weight: 400; margin-top: 3px; }
+.row .read { font-family: var(--hand); color: var(--yellow); font-size: .85rem; white-space: nowrap; }
+.row .label { min-width: 0; }
+.board-foot {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 26px; padding-top: 14px; border-top: 2px dotted var(--leader);
+  color: var(--chalk); font-family: var(--hand); font-size: 1rem;
+}
+.board-foot .dd { width: 28px; height: 28px; }
+.board-foot .grow { flex: 1 1 auto; }
+
+/* ---------- below the board ---------- */
+.below {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 40px;
+  margin-top: 46px;
+  align-items: start;
+}
+.below h2 {
+  font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+  font-size: 1.65rem; margin: 0 0 4px; line-height: 1;
+}
+.below .sub { font-family: var(--hand); color: var(--muted); margin: 0 0 16px; }
+
+/* specials chalkboard */
+.specials {
+  background: var(--board); color: var(--board-ink);
+  border: 8px solid var(--ice); border-radius: 4px;
+  padding: 18px 20px 20px;
+}
+.specials h2 { color: var(--board-ink); display: flex; align-items: center; gap: 10px; }
+.specials h2 .dd { width: 30px; height: 30px; color: var(--yellow); }
+.specials .sub { color: var(--board-muted); }
+.specials ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 22px; }
+.specials li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px; align-items: start; font-family: var(--hand); font-size: 1.08rem; line-height: 1.35; }
+.specials li .dd { width: 32px; height: 32px; color: var(--chalk); margin-top: 2px; }
+
+/* nutrition label */
+.nutrition {
+  background: #FFFFFF; color: #111;
+  border: 2px solid #111;
+  padding: 8px 10px 10px;
+  font-family: "Helvetica Neue", "Arial Narrow", var(--body);
+  max-width: 340px;
+}
+.nutrition h3 { font-family: var(--display); font-weight: 900; font-size: 2.3rem; line-height: .95; margin: 0; letter-spacing: .01em; }
+.nutrition .serving { font-size: .85rem; border-bottom: 10px solid #111; padding-bottom: 4px; margin: 2px 0 4px; }
+.nutrition .amt { font-weight: 800; font-size: .8rem; border-bottom: 4px solid #111; padding-bottom: 3px; margin-bottom: 2px; }
+.nutrition dl { margin: 0; }
+.nutrition .nrow { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid #111; padding: 4px 0; font-size: .92rem; }
+.nutrition dt { font-weight: 800; }
+.nutrition dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.nutrition .foot { border-top: 6px solid #111; font-size: .75rem; padding-top: 5px; margin: 4px 0 0; }
+.nf-col { display: grid; gap: 14px; justify-items: start; }
+.nf-col .scribble { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--muted); }
+.nf-col .scribble .dd { width: 40px; height: 26px; color: var(--doodle); }
+
+.footer-line { margin-top: 50px; color: var(--muted); font-size: .9rem; }
+
+/* ---------- bottom bar ---------- */
+.bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  background: var(--ink); color: var(--milk);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px));
+}
+.bar-inner { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.bar .tray-label { font-family: var(--hand); font-size: 1.1rem; }
+.bar .count {
+  display: inline-block; min-width: 1.6em; text-align: center;
+  background: var(--yellow); color: #2A1A12; font-weight: 700; border-radius: 3px; padding: 0 5px; margin-left: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.bar .spacer { flex: 1 1 auto; }
+.btn {
+  border: 2px solid currentColor; background: none; border-radius: 3px;
+  padding: 6px 14px; font-weight: 700; cursor: pointer;
+}
+.btn.fill { background: var(--yellow); color: #2A1A12; border-color: var(--yellow); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ---------- drink panel ---------- */
+.scrim { position: fixed; inset: 0; background: rgba(20, 12, 8, .45); z-index: 40; }
+.panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 41;
+  width: min(560px, 100%);
+  background: var(--panel); color: var(--ink);
+  border-left: 6px solid var(--ice);
+  overflow-y: auto;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) calc(110px + env(safe-area-inset-bottom, 0px)) 24px;
+}
+.panel.enter { animation: slideIn .28s ease-out; }
+@keyframes slideIn { from { transform: translateX(40px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.panel .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.panel .section-tag { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--muted); margin: 0; font-size: 1.05rem; }
+.panel .section-tag .dd { width: 30px; height: 30px; color: var(--doodle); }
+.panel h2 {
+  font-family: var(--display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(2rem, 6vw, 2.7rem); line-height: .95; margin: 14px 0 4px; letter-spacing: .01em;
+  text-wrap: balance;
+}
+.panel .real { margin: 0 0 14px; color: var(--muted); font-size: .95rem; }
+.panel .price-tag { display: inline-block; font-family: var(--receipt); font-weight: 700; background: var(--yellow); color: #2A1A12; padding: 1px 8px; border-radius: 2px; margin-bottom: 4px; }
+.panel h3 {
+  font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
+  font-size: 1.05rem; margin: 24px 0 6px;
+}
+.story p { margin: 0 0 12px; max-width: 62ch; }
+.story p.placeholder, .sweet.placeholder { font-family: var(--hand); color: var(--muted); }
+.sweet { border-left: 4px solid var(--yellow); padding: 4px 0 4px 12px; margin: 0; }
+.ingredients { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ingredients li { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 8px; align-items: center; }
+.ingredients .pct { font-family: var(--receipt); font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.ingredients .bar-fill { height: 6px; background: var(--line); margin-top: 3px; }
+.ingredients .bar-fill span { display: block; height: 100%; background: var(--ice); }
+.tasting { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.panel .meta { font-family: var(--receipt); font-size: .92rem; margin: 0; }
+.proof { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.proof a { font-weight: 700; text-underline-offset: 3px; }
+.proof .todo { font-family: var(--hand); color: var(--muted); }
+.panel .actions { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.panel .btn { color: var(--ink); }
+.panel .btn.fill { color: #2A1A12; }
+.inbox { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 4px 0 10px; }
+.inbox div { border: 2px solid var(--line); padding: 8px; }
+.inbox b { display: block; font-family: var(--display); font-size: 1.9rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.inbox span { font-size: .8rem; color: var(--muted); }
+
+/* ---------- receipt ---------- */
+.receipt-wrap {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(20, 12, 8, .55);
+  display: flex; justify-content: center; align-items: flex-start;
+  overflow-y: auto;
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px));
+}
+.receipt {
+  width: min(330px, 100%);
+  background: var(--paper); color: var(--paper-ink);
+  font-family: var(--receipt); font-size: .9rem; line-height: 1.45;
+  padding: 18px 16px 22px;
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.5);
+}
+.receipt .center { text-align: center; }
+.receipt .rule { border-top: 1px dashed var(--paper-ink); margin: 8px 0; }
+.receipt .line { display: flex; justify-content: space-between; gap: 10px; }
+.receipt .line span:first-child { min-width: 0; }
+.receipt .line span:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.receipt .feed { opacity: 0; animation: feed .18s forwards; }
+@keyframes feed { to { opacity: 1; } }
+.receipt-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; justify-content: center; }
+.receipt-actions .btn { color: var(--paper-ink); }
+.receipt .msg { text-align: center; min-height: 1.4em; margin: 8px 0 0; font-size: .85rem; }
+
+/* ---------- tip jar ---------- */
+.tipjar {
+  position: fixed; z-index: 45;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  bottom: calc(66px + env(safe-area-inset-bottom, 0px));
+  width: min(340px, calc(100% - 32px));
+  background: var(--panel); color: var(--ink);
+  border: 2px solid var(--ink); border-radius: 3px;
+  padding: 14px 16px;
+}
+.tipjar h3 { font-family: var(--display); text-transform: uppercase; margin: 0 0 6px; font-size: 1.3rem; letter-spacing: .04em; }
+.tipjar ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.tipjar .addr { user-select: all; font-family: var(--receipt); }
+.tipjar .copy { margin-left: 8px; font-size: .8rem; padding: 2px 8px; }
+.tipjar .todo { font-family: var(--hand); color: var(--muted); }
+
+/* ---------- plain view ---------- */
+.plain { max-width: 760px; margin: 0 auto; padding-block: 24px 40px; }
+.plain h1 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: 2.6rem; line-height: 1; margin: 10px 0 4px; }
+.plain .intro { color: var(--muted); margin: 0 0 22px; }
+.plain h2 { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 1.4rem; margin: 28px 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+.plain ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; }
+.plain li b { font-weight: 700; }
+.plain .back { margin-bottom: 4px; }
+.plain .contact { font-family: var(--receipt); }
+
+/* ---------- the cup ---------- */
+.ice { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .ice { animation: melt 600s linear forwards; }
+  .ice.b { animation-duration: 520s; }
+  .ice.c { animation-duration: 700s; }
+  .drop { animation: bead 1.4s ease-out both; }
+  .drop:nth-of-type(2n) { animation-delay: .3s; }
+  .drop:nth-of-type(3n) { animation-delay: .6s; }
+}
+@keyframes melt { to { transform: scale(.55); opacity: .6; } }
+@keyframes bead { from { opacity: 0; } to { opacity: .85; } }
+@media (prefers-reduced-motion: reduce) {
+  .panel.enter { animation: none; }
+  .receipt .feed { animation: none; opacity: 1; }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .sec.w7, .sec.w5, .sec.w6 { grid-column: span 12; }
+  .below { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .counter { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 14px; padding-block: 16px 14px; }
+  .cup-wrap { width: 104px; height: 132px; }
+  .cup { width: 74px; left: 15px; }
+  .cup-wrap .d1 { width: 20px; height: 20px; top: 24px; }
+  .cup-wrap .d2 { width: 18px; height: 18px; }
+  .cup-wrap .d3 { width: 24px; height: 16px; top: 62px; right: -6px; }
+  .cup-wrap .d4 { width: 16px; height: 16px; bottom: 20px; left: 0; }
+  .cup-wrap .d5 { width: 18px; height: 18px; left: 26px; }
+  .controls { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+  .counter .lede { font-size: .92rem; }
+  .row .name { font-size: 1.15rem; }
+  .signature .row .name { font-size: 1.35rem; }
+  .row .price { font-size: .82rem; }
+  .panel { border-left: 0; border-top: 6px solid var(--ice); }
+  .specials ul { grid-template-columns: minmax(0, 1fr); }
+  .inbox b { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+
+<div id="cafe">
+  <header class="wrap counter">
+    <div class="cup-wrap" aria-hidden="false">
+      <span class="dd d1" data-doodle="bean" aria-hidden="true"></span>
+      <span class="dd d2" data-doodle="star" aria-hidden="true"></span>
+      <span class="dd d3" data-doodle="dots" aria-hidden="true"></span>
+      <span class="dd d4" data-doodle="ice" aria-hidden="true"></span>
+      <span class="dd d5" data-doodle="note" aria-hidden="true"></span>
+      <svg class="cup" viewBox="0 0 120 170" role="img" aria-labelledby="cupTitle">
+        <title id="cupTitle">A clear cold coffee cup with "aahan?" written on it in marker</title>
+        <rect x="6" y="18" width="108" height="10" rx="3" fill="var(--line)" stroke="var(--ink)" stroke-width="2"/>
+        <path d="M58 18 L74 0" stroke="var(--yellow)" stroke-width="8" stroke-linecap="round"/>
+        <path d="M12 30 L108 30 L96 166 L24 166 Z" fill="var(--milk)" stroke="var(--ink)" stroke-width="2.5"/>
+        <path d="M17 64 L103 64 L96 166 L24 166 Z" fill="#7A5038"/>
+        <path d="M18 64 Q40 58 60 64 T102 64" fill="none" stroke="#B88A66" stroke-width="5"/>
+        <rect class="ice a" x="28" y="44" width="24" height="22" rx="4" fill="#E3EEF2" stroke="#9FB5BD" stroke-width="1.5" opacity=".95"/>
+        <rect class="ice b" x="60" y="48" width="22" height="20" rx="4" fill="#E3EEF2" stroke="#9FB5BD" stroke-width="1.5" opacity=".95"/>
+        <rect class="ice c" x="44" y="72" width="20" height="18" rx="4" fill="#E3EEF2" stroke="#9FB5BD" stroke-width="1.5" opacity=".8"/>
+        <rect x="22" y="104" width="76" height="38" fill="var(--sleeve)"/>
+        <text x="60" y="130" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="23" fill="#21160F">aahan?</text>
+        <circle class="drop" cx="20" cy="50" r="2" fill="#9FB5BD"/>
+        <circle class="drop" cx="99" cy="80" r="2.2" fill="#9FB5BD"/>
+        <circle class="drop" cx="27" cy="92" r="1.6" fill="#9FB5BD"/>
+        <circle class="drop" cx="94" cy="148" r="1.8" fill="#9FB5BD"/>
+        <circle class="drop" cx="31" cy="152" r="1.5" fill="#9FB5BD"/>
+      </svg>
+    </div>
+    <div class="intro">
+      <p class="who">Aahan Lulla · Akola, India · Class of 2027</p>
+      <h1>aahan? café</h1>
+      <p class="lede">Everything I've researched, built, written and said out loud, served as a menu. <strong>Every drink has a story behind it. Tap one to read it.</strong> The barista wasn't sure how to spell my name either.</p>
+    </div>
+    <div class="controls">
+      <div class="sugar" role="group" aria-label="Sugar level">
+        <span class="sugar-label">Sugar:</span>
+        <span class="sugar-opts">
+          <input type="radio" name="sugar" id="sugar-none" value="none" checked>
+          <label for="sugar-none">No sugar</label>
+          <input type="radio" name="sugar" id="sugar-sweet" value="sweet">
+          <label for="sugar-sweet">Extra sweet</label>
+        </span>
+      </div>
+      <button class="bill-link" id="openBill" type="button">In a hurry? Just bring the bill.</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="board" aria-label="Menu board">
+      <div class="board-top">
+        <p class="today">Today's menu</p>
+        <p class="hint">Tap any drink to read its story. <span class="dd" data-doodle="arrow" aria-hidden="true"></span></p>
+      </div>
+      <div class="signature">
+        <p class="kicker"><span class="dd" data-doodle="note" aria-hidden="true"></span>House signature · cup #58 · where it all started</p>
+        <div id="sigRow"></div>
+      </div>
+      <div class="board-grid" id="boardGrid"></div>
+      <div class="board-foot">
+        <span class="dd" data-doodle="bean" aria-hidden="true"></span>
+        <span class="dd" data-doodle="ice" aria-hidden="true"></span>
+        <span class="grow">Prices are results, not rupees. Refills on request.</span>
+        <span class="dd" data-doodle="question" aria-hidden="true"></span>
+        <span class="dd" data-doodle="star" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <div class="below">
+      <section class="specials" aria-labelledby="offTitle">
+        <h2 id="offTitle"><span class="dd" data-doodle="star" aria-hidden="true"></span>Off-Menu Specials</h2>
+        <p class="sub">Things I'd tell you if we shared a table.</p>
+        <ul id="specials"></ul>
+      </section>
+      <section class="nf-col" aria-labelledby="nfTitle">
+        <div>
+          <h2 id="nfTitle">Side of the cup</h2>
+          <p class="sub">The academics, in standard serving size.</p>
+        </div>
+        <div class="nutrition" id="nutrition"></div>
+        <p class="scribble"><span class="dd" data-doodle="arrowup" aria-hidden="true"></span>Read it like a real label.</p>
+      </section>
+    </div>
+
+    <p class="footer-line">Made by Aahan Lulla. Every number on this menu comes with proof inside its card.</p>
+  </main>
+</div>
+
+<div id="plain" class="plain" hidden></div>
+
+<div class="bar" role="region" aria-label="Your tray">
+  <div class="bar-inner">
+    <button class="btn" id="tipBtn" type="button" aria-expanded="false" aria-controls="tipjar">Tip jar</button>
+    <span class="spacer"></span>
+    <span class="tray-label">Your tray <span class="count" id="trayCount">0</span></span>
+    <button class="btn fill" id="checkout" type="button" disabled>Print my receipt</button>
+  </div>
+</div>
+
+<div class="tipjar" id="tipjar" hidden>
+  <h3>Tip jar</h3>
+  <ul>
+    <li>Email: <span class="addr" id="emailAddr">lullaaahan888@gmail.com</span><button class="btn copy" type="button" id="copyEmail">Copy</button></li>
+    <li>Instagram: <a href="https://instagram.com/aahanwrites_" target="_blank" rel="noopener">@aahanwrites_</a></li>
+    <li>GitHub: <a href="https://github.com/lullaaahan888-dotcom" target="_blank" rel="noopener">lullaaahan888-dotcom</a></li>
+    <li>LinkedIn: <a href="https://www.linkedin.com/in/aahan-lulla-7b3ab135b/" target="_blank" rel="noopener">Aahan Lulla</a></li>
+  </ul>
+</div>
+
+<div id="scrim" class="scrim" hidden></div>
+<aside id="panel" class="panel" hidden role="dialog" aria-modal="true" aria-labelledby="panelTitle"></aside>
+<div id="receiptWrap" class="receipt-wrap" hidden role="dialog" aria-modal="true" aria-label="Your receipt"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================= DOODLES ================= */
+  var DOODLES = {
+    note: '<ellipse cx="14" cy="35" rx="5.5" ry="4.2"/><ellipse cx="31" cy="31" rx="5.5" ry="4.2"/><path d="M19.5 35V12.5l17-4.5v23"/><path d="M19.5 18.5l17-4.5"/>',
+    wave: '<circle cx="20" cy="20" r="12.5"/><path d="M29.5 29.5l11 11"/><path d="M11 20.5h2.5l2-5 3 10 3-9 2 4h3"/>',
+    phone: '<rect x="14" y="5" width="20" height="38" rx="4"/><path d="M24 14.5l7 3v5.5c0 5-3 8-7 10-4-2-7-5-7-10v-5.5z"/><path d="M22 39h4"/>',
+    cups: '<path d="M7 17h15l-2.5 23h-10z"/><path d="M26 17h15l-2.5 23h-10z"/><path d="M5 17h19M24 17h19"/><path d="M15 17l3-11M34 17l3-11"/>',
+    mic: '<rect x="17" y="5" width="14" height="22" rx="7"/><path d="M11 21c0 8 6 12.5 13 12.5S37 29 37 21"/><path d="M24 33.5V42M17 42h14"/><path d="M20 12h3M20 17h3"/>',
+    book: '<path d="M24 12c-5-4-12-4.5-17-2v28c5-2.5 12-2 17 2 5-4 12-4.5 17-2V10c-5-2.5-12-2-17 2z"/><path d="M24 12v28"/><path d="M11 17c3-1 6-1 9 0M11 23c3-1 6-1 9 0"/>',
+    envelope: '<rect x="6" y="12" width="36" height="25" rx="2"/><path d="M6.5 14l17.5 13 17.5-13"/><path d="M33 7c1.5 1.5 1.5 3 0 4.5"/>',
+    star: '<path d="M24 5.5l5 12.5 13 1-10 8.5 3.5 13-11.5-7.5-11.5 7.5 3.5-13-10-8.5 13-1z"/>',
+    bean: '<ellipse cx="24" cy="24" rx="10.5" ry="15" transform="rotate(28 24 24)"/><path d="M18.5 11.5c7 6-2 18 6 25"/>',
+    ice: '<rect x="10" y="11" width="28" height="27" rx="5" transform="rotate(-9 24 24)"/><path d="M16 18.5l6-3M15.5 23.5l2.5-1.2"/>',
+    uke: '<circle cx="17" cy="33" r="9"/><circle cx="24.5" cy="23" r="6"/><path d="M27.5 19.5l12-12.5"/><path d="M36.5 6l4.5 4.5"/><circle cx="19" cy="31" r="2.6"/>',
+    grid: '<rect x="5" y="15" width="10" height="10"/><rect x="19" y="15" width="10" height="10"/><rect x="33" y="15" width="10" height="10"/><path d="M7 33h6M21 33h6M35 33h6"/><path d="M22 18l4 4M26 18l-4 4"/>',
+    capsule: '<rect x="14" y="5" width="20" height="38" rx="4"/><path d="M21 18.5l8 5.5-8 5.5z"/><path d="M22 39h4"/>',
+    plane: '<path d="M6 25l36-16-12 31-6-12.5z"/><path d="M24 27.5L42 9"/>',
+    tv: '<rect x="7" y="13" width="34" height="23" rx="3"/><path d="M18 6.5l6 6.5 6-6.5"/><path d="M16 42h16"/><path d="M13 19c2-1 4-1 6 0"/>',
+    dots: '<circle cx="10" cy="26" r="2.8" class="fill"/><circle cx="24" cy="26" r="2.8" class="fill"/><circle cx="38" cy="26" r="2.8" class="fill"/>',
+    question: '<path d="M16 16.5c0-6.5 5-10.5 10-9.5s9 6 6 11-8 6-8 11.5"/><circle cx="24" cy="38.5" r="1.8" class="fill"/>',
+    half: '<circle cx="24" cy="24" r="16"/><path d="M24 8v32"/><path d="M15 21h3"/><path d="M30 20h3"/><path d="M28.5 29.5c2 2.2 5 2.2 7 0"/><path d="M13 30h6"/>',
+    dance: '<circle cx="24" cy="9" r="4"/><path d="M24 13v14l-8 12M24 27l7 12"/><path d="M14 18l10 2 11-6"/>',
+    knight: '<path d="M15 41h20"/><path d="M17 41c0-7 3-10 7-13l-6-1c-3 0-5-2-4-5l7-9c3-4 9-5 13-2 4 4 4 12 1 19l-2 11"/><circle cx="25" cy="16" r="1.6" class="fill"/>',
+    arrow: '<path d="M4 8c22-5 44 3 46 24"/><path d="M42 25l8 8 6-11"/>',
+    arrowup: '<path d="M54 30C38 32 18 26 10 8"/><path d="M5 16l5-9 8 6"/>'
+  };
+  var WIDE = { arrow: "0 0 60 40", arrowup: "0 0 60 36" };
+  function doodleSVG(name) {
+    var vb = WIDE[name] || "0 0 48 48";
+    return '<svg viewBox="' + vb + '" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+      DOODLES[name].replace(/class="fill"/g, 'fill="currentColor" stroke="none"') + '</svg>';
+  }
+  function doodle(name, cls) {
+    var s = document.createElement("span");
+    s.className = "dd" + (cls ? " " + cls : "");
+    s.setAttribute("aria-hidden", "true");
+    s.innerHTML = doodleSVG(name);
+    return s;
+  }
+  document.querySelectorAll("[data-doodle]").forEach(function (n) { n.innerHTML = doodleSVG(n.getAttribute("data-doodle")); });
+
+  /* ================= CONTENT (edit here) ================= */
+  var SWEET_TODO = "[AAHAN WRITES THIS]";
+
+  var LYRICS = {
+    id: "lyrics", name: "RUTH Brew", real: "Beyond the Lexicon: A Comparative Evaluation of VADER and GoEmotions on Music Lyrics", price: "66% vs 32%",
+    story: [
+      "This one started with Kate Bush. While learning NLP at SAAI, I kept noticing that text-based models struggled with songs, where so much of the meaning sits inside metaphor. \"Running Up That Hill\" was the song that made me want to measure it.",
+      "I picked 25 songs across nine emotional categories, from Romantic and Longing to Bittersweet and Tragic, and labelled each one myself. Then I ran the lyrics through two models: VADER, which scores words against a fixed dictionary, and GoEmotions, a neural classifier trained on 58,000 labelled Reddit comments.",
+      "VADER matched my labels only 32% of the time. GoEmotions did better, at 66% weighted (48% exact). Both failed in ways worth naming, so I named them: four failure types for VADER, including metaphor blindness and accidental accuracy, and three for GoEmotions, including genre blindness.",
+      "My favourite result is the one that started it all. GoEmotions read \"Running Up That Hill\" as neutral, then curious, then confused. RUTH is also cup #58 in my cold coffee log, the recipe I named after the song. The Curieux Review has provisionally accepted the paper."
+    ],
+    ingredients: [["35", "Kate Bush on repeat"], ["30", "Python"], ["25", "Hand-labelling 25 songs"], ["10", "Metaphor"]],
+    tasting: ["VADER matched human labels in 32% of songs; GoEmotions reached 66% weighted (48% exact).", "Seven named failure modes: four for VADER, three for GoEmotions.", "Provisionally accepted by The Curieux Review."],
+    brewed: "2026",
+    sweet: SWEET_TODO,
+    proof: [["Read the paper (PDF)", "papers/beyond-the-lexicon-music-nlp.pdf"]]
+  };
+
+  var MENU = [
+    {
+      id: "research", title: "Signature Brews", sub: "Research, brewed slowly.", width: "w7", doodle: "wave",
+      items: [
+        {
+          id: "sindhi", name: "The Khmer Mistake", real: "Script Before Sound: Parameter-Efficient Adaptation of Whisper for Low-Resource Sindhi Speech Recognition", price: "142.5% → 18.7% WER",
+          story: [
+            "Sindhi is the language spoken at home. I understand it, but I can't read its script. OpenAI's Whisper lists Sindhi as a supported language, so I gave it 328 Sindhi recordings. Only 3% came back in the right script, Perso-Arabic. The rest arrived in Devanagari, romanised Latin, Telugu and Khmer, for a word error rate of 142.5%.",
+            "My first attempt was a quick LoRA fine-tune of whisper-medium on 200 clips, which brought the error rate from 148.35% to 72.97%. That pilot model is the one on Hugging Face. A speech-recognition professor I wrote to called it not novel. Dr. Mayur Jain, whom I had cold-emailed, agreed it was a start and pushed me further.",
+            "So I studied the mistakes. Sounded out, many of the wrong-script outputs were the right words: the model could hear Sindhi, but it couldn't write it. I tested nine changes one at a time and kept each only if it lowered the error rate. Fine-tuning fixed the script confusion, and beam search and LoRA adapters on every linear layer helped further. Five other changes didn't make the cut.",
+            "Trained on 2,000 utterances, whisper-small reached 18.7% WER and 6.4% CER. Then I compared model sizes. The largest model, whisper-large-v3-turbo, won when everyone had 500 utterances, but giving the small model twice the data beat it. For a language like Sindhi, more recordings matter more than bigger models.",
+            "About two-thirds of the remaining errors are misspellings of one or two characters, often in names like Malaysia and Australia. Along the way I found two traps: standard Unicode normalisation deletes two common Sindhi words, ۾ (in) and ۽ (and), and 1,351 training clips repeated test sentences, so I removed them.",
+            "My grandmother reads the script I can't, so she checked my transcripts and marked each one right, almost or wrong. The paper is out as a preprint on Zenodo, with thanks to Dr. Mayur Jain, whose feedback shaped the model comparison and the ablations."
+          ],
+          ingredients: [["40", "Python"], ["30", "Stubbornness"], ["20", "Grandmother's proofreading"], ["10", "Melted ice"]],
+          tasting: ["Before fine-tuning, only 3% of outputs were in the correct script.", "Word error rate fell from 142.5% to 18.7% (6.4% character error rate) across nine ablations.", "80.5% of test sentences came out error-free or with only near-misses.", "More data beat a bigger model: whisper-small on 1,000 clips (23.0%) beat large-v3-turbo on 500 (25.9%).", "Preprint published on Zenodo on 25 October 2026."],
+          brewed: "Grades 11 and 12 (2026)",
+          sweet: "Asked an AI to transcribe my family's language. It replied in Khmer. We've since had words.",
+          proof: [["Preprint on Zenodo", "https://zenodo.org/records/23645984"], ["Read the paper (PDF)", "papers/script-before-sound-sindhi-asr.pdf"], ["Pilot model on Hugging Face", "https://huggingface.co/aahanlulla18/whisper-medium-sindhi-lora"]]
+        },
+        {
+          id: "hrtf", name: "Surround Sound Cold Brew", real: "Modelling and Perceptual Evaluation of Head-Related Transfer Function–Based Spatial Audio", price: "71% vs 29%",
+          story: [
+            "You've probably heard an \"8D audio\" song, where the music seems to circle your head. It's made by panning volume from ear to ear, which uses only one of the cues our ears rely on to place a sound. I wanted to know what happens if you model the rest.",
+            "I built two versions in Python. The first copies the 8D trick: a sine wave that sweeps the sound between channels, plus an echo. The second convolves the audio with head-related transfer functions from the MIT KEMAR dataset, measurements of how a real head and outer ear filter sound from each direction. I extended it to full 3D, so the sound can spiral up and down as well as around.",
+            "Seven listeners took a blind test on headphones. The HRTF versions were heard outside the head 71% of the time, against 29% for the 8D version, and 86% of listeners placed the fixed-position clip correctly. The twist: four of the seven voted the 8D version the most realistic. The accurate model won on physics and lost on taste, and that turned out to be the most interesting result in the paper."
+          ],
+          ingredients: [["45", "Python signal processing"], ["25", "MIT KEMAR head measurements"], ["20", "Listening study"], ["10", "Headphones"]],
+          tasting: ["Externalisation: 71% for HRTF clips against 29% for 8D panning.", "Localisation accuracy for the fixed-position clip: 86%.", "Most realistic, by vote: the 8D clip (4 of 7).", "Published in Your Biotech Newsletter, Volume 5."],
+          brewed: "Grades 11 and 12 (2026)",
+          sweet: SWEET_TODO,
+          proof: [["Read it in Your Biotech Newsletter", "https://docs.google.com/document/d/1_MU8pSxhLSm7n2LtP1TpJIID5MePWVkXbwN80MtBujk/edit?usp=sharing"]]
+        },
+        {
+          id: "medisec", name: "Fellowship Float", real: "MediSec Fellowship 2026, Track 3: AI in Medicine (Fellow and Research Team Lead)", price: "100k rows",
+          story: [
+            "MediSec is a healthcare cybersecurity nonprofit, and its fellowship was my first time on a research team with people from other countries. I was nervous going in. I pitched a question about why epilepsy-detecting wearables misread noisy EEG signals, and it was selected.",
+            "Our team studied AI epilepsy wearables from three angles: cyber risks, missed seizures and false-alarm fatigue. I trained logistic regression, decision tree and random forest models on synthetic EEG datasets of 10,000, 50,000 and 100,000 rows, then compared precision, recall and F-scores. A missed seizure is far more dangerous than a false alarm, so false negatives got most of my attention.",
+            "Somewhere along the way I became the team's lead. I divided the work, kept calls running across time zones and settled disagreements. Presenting our final research to the guest speakers was my idea, and I invited professionals I had met on LinkedIn. Several of them came."
+          ],
+          ingredients: [["35", "Seizure-detection ML"], ["30", "Coordinating across time zones"], ["20", "Pitching"], ["15", "Late-night calls"]],
+          tasting: ["Pitched and led an international study of AI epilepsy wearables.", "Built seizure-detection models on datasets of up to 100,000 rows.", "Presented the final research to the fellowship's guest speakers."],
+          brewed: "Grades 11 and 12 (2026)",
+          sweet: SWEET_TODO,
+          proof: []
+        },
+        {
+          id: "eeg", name: "The Brainwave Frappé", real: "Deep Learning Classification of Harmful Brain Activity from ICU EEG with Cortical Source Localization", price: "ECE 0.272",
+          story: [
+            "ICU patients on continuous EEG produce far more signal than specialists can read in real time, and seizures are only one of the harmful patterns hiding in it. Small hospitals often have no one to read it at night.",
+            "I built one pipeline that does three jobs at once. A two-branch model, a convolutional network on the raw waveform and a Transformer on spectrograms, names the pattern among six classes: seizure, LPD, GPD, LRDA, GRDA and other. sLORETA source localisation then places it on a 3D model of the cortex, and saliency maps and attention show which parts of the signal the model relied on.",
+            "This is a methods demonstration on controlled synthetic data: real resting-state recordings plus five patterns generated from published clinical descriptions. The model separated all six classes on held-out patients, which mainly proves the pipeline is wired correctly. The finding I care about is the failure: an expected calibration error of 0.272, meaning the model sounds far more confident than it has earned. In an ICU, that is the error that matters.",
+            "The paper lays out the exact protocol for rerunning it on the real labelled Harvard and MGH corpus. Angad Chopra mentored the project, which grew out of my seizure-detection work at MediSec."
+          ],
+          ingredients: [["40", "CNN-Transformer"], ["25", "EEG signal processing"], ["20", "sLORETA source localisation"], ["15", "Honesty about calibration"]],
+          tasting: ["End-to-end pipeline: classification, cortical localisation and attribution in one pass.", "Tested on controlled synthetic data; documented an overconfidence failure (ECE 0.272).", "Preprint, September 2026."],
+          brewed: "September 2026",
+          sweet: SWEET_TODO,
+          proof: [["Read the preprint (PDF)", "papers/icu-eeg-source-localization.pdf"]]
+        },
+        {
+          id: "saai", name: "The First Pour", real: "AI Research & Innovation Program, School of Applied Artificial Intelligence (SAAI)", price: "64 combos",
+          story: [
+            "My school doesn't teach computational linguistics, and nobody nearby works in it. So I cold-emailed NLP researchers across India until Himanshu Khale, Director of the School of Applied Artificial Intelligence, gave me a place in its research batch.",
+            "My sprint was the IPL Sentiment Pipeline Challenge. I built sentiment-analysis pipelines on 80,000 and 300,000 rows of IPL cricket commentary and tested 64 combinations of vectorisers, classifiers and datasets. The lesson that stuck: the most sophisticated model is rarely the most practical one.",
+            "The evaluation committee's letter says I \"showed curiosity in exploring multiple modelling strategies\" and have \"strong potential as an emerging AI practitioner.\" Those basics led straight to my music NLP paper, the RUTH Brew at the top of this menu."
+          ],
+          ingredients: [["50", "Tokenisation and vectorisation"], ["30", "Sentiment analysis"], ["20", "Nerve to hit send"]],
+          tasting: ["Sentiment pipelines on 80,000 and 300,000 rows of IPL commentary.", "Tested 64 vectoriser, classifier and dataset combinations.", "Certificate of completion and a recommendation letter (ID SAAI-R-2-AIRIP-06)."],
+          brewed: "Completed June 2026",
+          sweet: SWEET_TODO,
+          proof: [["Certificate of completion (PDF)", "papers/saai-certificate.pdf"], ["Recommendation letter (PDF)", "papers/saai-recommendation.pdf"]]
+        },
+        {
+          id: "curieux", name: "Stress Test Shake", real: "Academic Stress Among Teenagers, Curieux Academic Journal", price: "7.8 / 10",
+          story: [
+            "I wanted to find out whether academic stress among students was as widespread as it seemed.",
+            "I ran an online survey of about 30 students across age groups. The average stress score came out at 7.8 out of 10, and most respondents asked for more creative, productive classes to help them cope. The study appears on page 583 of the Curieux Academic Journal."
+          ],
+          ingredients: [["50", "Survey design"], ["30", "Thirty honest answers"], ["20", "Data analysis"]],
+          tasting: ["Surveyed about 30 students.", "Average stress score: 7.8 out of 10."],
+          brewed: "",
+          sweet: SWEET_TODO,
+          proof: [["Published paper (page 583)", "https://www.curieuxacademicjournal.com/_files/ugd/99711c_39d5ed8fd2da4a4baaa7c784e1ec1c8d.pdf"]]
+        }
+      ]
+    },
+    {
+      id: "built", title: "Made In-House", sub: "Things I built and shipped.", width: "w5", doodle: "phone",
+      items: [
+        {
+          id: "sheield", name: "SHEield Shot", real: "SHEield: A Shield with SHE at Its Core (women's safety app)", price: "225+ students",
+          story: [
+            "In 2024, the case of a young doctor in Kolkata stayed with me for weeks. I read the WHO and UNICEF reports on violence against women and wanted to build something people could carry.",
+            "SHEield is a women's safety app built in Flutter. One tap, or a shake, texts your location to trusted contacts, sounds a siren and flashes the flashlight so people nearby notice. It also has a fake call, a walk-me-home timer and a section of safety tips.",
+            "I released the first version as an APK on Women's Day. One tester called it what every girl needs. Getting onto Google Play took three rejections and a 14-day closed test with friends, family and teachers of all ages. It went live in October 2026, free, for anyone of any gender.",
+            "Since then it has passed 60 downloads, I've presented it at 3+ schools and nonprofits to 225+ students, and Dr. Sonal Modi has endorsed it."
+          ],
+          ingredients: [["45", "Flutter"], ["25", "Safety research"], ["20", "Tester feedback"], ["10", "Patience with Play Store review"]],
+          tasting: ["Live on Google Play since October 2026; 60+ downloads.", "Presented at 3+ schools and nonprofits, reaching 225+ students.", "Endorsed by Dr. Sonal Modi."],
+          brewed: "Grades 10 to 12",
+          sweet: SWEET_TODO,
+          proof: [["SHEield on Google Play", "https://play.google.com/store/apps/details?id=com.aahanlulla.sheield"]]
+        },
+        {
+          id: "twofortwo", name: "Pink Ribbon Iced Latte", real: "Website for 2for2Boobs, a breast cancer awareness nonprofit", price: "Next.js 15",
+          story: [
+            "2for2Boobs is a breast cancer awareness nonprofit founded by Ms. Tallulah Anderson. I came up with the concept for its new site and designed it in Figma.",
+            "Our team of three, working across time zones, built it in Next.js 15, TypeScript and Tailwind CSS. I built the front end, and Ashrit Mandava built the FastAPI backend that serves news, events and statistics. For long stretches I was chasing replies across time zones and learning tools as I needed them.",
+            "Now I'm building an admin panel, so the nonprofit's staff can publish updates without writing code."
+          ],
+          ingredients: [["35", "Figma design"], ["35", "Next.js and TypeScript"], ["20", "Tailwind CSS"], ["10", "Time-zone maths"]],
+          tasting: ["Concept, Figma design and front end by me.", "Admin panel in progress."],
+          brewed: "2026",
+          sweet: SWEET_TODO,
+          proof: [["Live site", "https://2for2boobs-website.vercel.app/events"]]
+        }
+      ]
+    },
+    {
+      id: "community", title: "House Blend", sub: "Leadership and community.", width: "w5", doodle: "cups",
+      items: [
+        {
+          id: "parse", name: "P.A.R.S.E. House Blend", real: "Project P.A.R.S.E. (Programming, AI, Research & Security, Explained!), Founder and President", price: "75+ members",
+          story: [
+            "A scammer once made an Instagram account pretending to be my father and messaged our family and friends asking for money. We got it taken down by reporting it from every device in the house.",
+            "That's where Project P.A.R.S.E. began. The idea is that technology shouldn't feel scary to anyone, from shopkeepers to grandparents to children. Confession: I picked the name first and worked out the acronym afterwards.",
+            "We turn AI, research and security into plain-language Instagram explainers, and we run a guest speaker series where professionals explain their work in everyday words. More than ten speakers have joined us so far, including Heena Lulla, Sanket Bansal, Gita Poudel, Vinal Shanbhag, Rupshi Jha and Dharmendra Ahuja.",
+            "I also travelled 140 miles to UPAY NGO in Nagpur to teach children whose own teachers had largely given up on them. More than 75 hands went up through a two-hour session on scams and online safety. At the end I asked them to become chapter leads, and they became our first chapter. P.A.R.S.E. now has 75+ members, 4+ chapters in 3+ countries and 5+ partner organisations. SHEield and my book Pixel and Aahan both grew out of it."
+          ],
+          ingredients: [["30", "Guest speakers"], ["30", "Digital literacy posts"], ["25", "Teaching"], ["15", "Partnerships"]],
+          tasting: ["75+ members and 4+ chapters in 3+ countries.", "10+ guest speakers and 5+ partner organisations.", "First chapter opened at UPAY NGO, Nagpur."],
+          brewed: "Grades 11 and 12",
+          sweet: SWEET_TODO,
+          proof: [["P.A.R.S.E. on Instagram", "https://www.instagram.com/project_parse/"]]
+        },
+        {
+          id: "headboy", name: "Head Boy Espresso Tonic", real: "Head Boy and Student Council President", price: "1,800+ students",
+          story: [
+            "I was elected Head Boy from a student body of 1,800+ after three rounds of interviews. I lead the student council as the students' voice, organise school-wide events and competitions, and mentor juniors in public speaking.",
+            "I've held the role across both my schools, Mount Carmel High School and Prof. Prakash Dawale Jr. College."
+          ],
+          ingredients: [["40", "Event planning"], ["35", "Listening"], ["25", "Three interview rounds"]],
+          tasting: ["Elected after three interview rounds.", "Leads the student council for 1,800+ students."],
+          brewed: "Grades 9 to 12",
+          sweet: SWEET_TODO,
+          proof: []
+        },
+        {
+          id: "debate", name: "Debate Club Doppio", real: "Founder, School Debate Club", price: "20+ members",
+          story: ["I founded my school's debate club, which now has more than 20 members. I coach juniors on building arguments and structuring speeches, and I compete with them in inter-school debates, symposiums and declamations."],
+          ingredients: [["60", "Arguments"], ["40", "Juniors who showed up"]],
+          tasting: ["Founded the club; 20+ members.", "Coaches juniors in argument and structure."],
+          brewed: "Grades 9 to 12",
+          sweet: SWEET_TODO,
+          proof: []
+        },
+        {
+          id: "sat", name: "The Study Shot", real: "Volunteer SAT Tutor, Schoolhouse.world", price: "5 bootcamps",
+          story: ["On Schoolhouse.world, I've led five SAT bootcamps for ten students, with two 90-minute sessions a week."],
+          ingredients: [["60", "Practice questions"], ["40", "Patience"]],
+          tasting: ["Led 5 SAT bootcamps for 10 students."],
+          brewed: "2026",
+          sweet: SWEET_TODO,
+          proof: []
+        },
+        {
+          id: "teaching", name: "Scam-Proof Cold Foam", real: "Teaching Voice Modulation and Cyber-Scam Awareness", price: "Taught",
+          story: ["Friends and family already come to me with tech and homework questions, so teaching felt like the next step. I've run sessions on voice modulation and on spotting online scams."],
+          ingredients: [["50", "Scam awareness"], ["50", "Voice modulation"]],
+          tasting: ["Sessions on voice modulation and scam awareness."],
+          brewed: "Ongoing",
+          sweet: SWEET_TODO,
+          proof: []
+        }
+      ]
+    },
+    {
+      id: "speaking", title: "Served Loud", sub: "Public speaking and debate.", width: "w7", doodle: "mic",
+      items: [
+        {
+          id: "jci", name: "The Jasmine Iced Tea", real: "Best Male Speaker, JCI JASMINE 2025", price: "Best Speaker",
+          story: ["JCI JASMINE 2025 was a three-day national public speaking competition in the summer after Grade 10. I came home with Best Male Speaker, a trophy and a certificate."],
+          ingredients: [["70", "Three days of speeches"], ["30", "Revising in my head"]],
+          tasting: ["Best Male Speaker at a national competition.", "Trophy and certificate."],
+          brewed: "Summer 2025", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "iitb", name: "Monsoon Mocha", real: "5th Best Speaker, IIT Bombay Taivas Debate Workshop", price: "5th of hundreds",
+          story: ["The Taivas Debate Workshop at IIT Bombay runs over two days and draws several hundred participants. Heavy rain meant I couldn't make it on day one. I went on day two anyway and placed 5th Best Speaker, with a medal, a certificate and a letter of recommendation."],
+          ingredients: [["60", "Debate"], ["40", "Showing up for day two"]],
+          tasting: ["5th Best Speaker of several hundred participants.", "Medal, certificate and letter of recommendation."],
+          brewed: "Grade 12", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "every", name: "The Regular", real: "School Debate Champion, Four Consecutive Years", price: "4 for 4",
+          story: ["I've won the school debate final four years in a row and been named Best Speaker each year. In Grade 10, I also took 1st place in declamation and Best Presenter at the symposium. My speaking stayed at school level through Grades 9 and 10, then moved to national events in Grades 11 and 12."],
+          ingredients: [["50", "Debates"], ["30", "Symposiums"], ["20", "Declamations"]],
+          tasting: ["Won the school debate final in Grades 9, 10, 11 and 12.", "Grade 10: 1st in declamation; Best Presenter at the symposium."],
+          brewed: "Grades 9 to 12", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "poem", name: "Rose Petal Cold Brew", real: "1st Place, Poetry Oration", price: "1st",
+          story: ["In the poetry oration for my school house, every other participant recited a famous poem by someone like Homer or Shakespeare. The rules didn't require that, so I announced that I would recite a poem I had written myself, weeks after a news story that had shaken me. I'd brought a rose and plucked a petal for each sorrowful line. I won, and after that, people at school saw a different side of me."],
+          ingredients: [["60", "An original poem"], ["40", "A rose"]],
+          tasting: ["1st place, poetry oration, with an original poem."],
+          brewed: "Grade 10", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "cook", name: "Fewer Ingredients", real: "Winner, JCI Cooking Competition", price: "Won",
+          story: ["At a JCI cooking competition, I pushed my team toward restraint: fewer ingredients, chosen carefully. We won."],
+          ingredients: [["100", "Restraint"]],
+          tasting: ["1st place."],
+          brewed: "", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "planetspark", name: "Featured Twice", real: "Featured by PlanetSpark, with a Letter of Appreciation", price: "2 features",
+          story: ["PlanetSpark, a platform I've spoken on, featured me twice: once for a speech I gave as a child, \"Time Is Gold\", and once for my first book, Blood Runs Thicker Than Water. They also sent me a letter of appreciation."],
+          ingredients: [["50", "Speaking"], ["50", "Writing"]],
+          tasting: ["Two features: one for speaking, one for writing.", "Letter of appreciation."],
+          brewed: "Middle school onward", sweet: SWEET_TODO,
+          proof: [["\"Time Is Gold\" speech (Instagram reel)", "https://www.instagram.com/reels/CrNS8aOp75L/"], ["Feature on Blood Runs Thicker Than Water", "https://www.instagram.com/p/DLZPa8oSi9Y/"]]
+        }
+      ]
+    },
+    {
+      id: "writing", title: "The Pastry Case", sub: "Three published books, and counting.", width: "w6", doodle: "book",
+      items: [
+        {
+          id: "thriller", name: "Blood Runs Thicker Than Water", real: "Psychological thriller (my first book)", price: "Book #1",
+          story: [
+            "Blood Runs Thicker Than Water is a psychological thriller, and the first book I wrote and self-published. Before research papers and apps, this is where I learned to sit with one idea for months and see it through to the last page.",
+            "It earned me my school's Creative Mind award in Grade 10, and PlanetSpark featured it on Instagram."
+          ],
+          ingredients: [["45", "Suspense"], ["30", "Plot twists"], ["25", "Late-night drafts"]],
+          tasting: ["Published on Amazon.", "Won the school's Creative Mind award (Grade 10)."],
+          brewed: "By Grade 10", sweet: SWEET_TODO,
+          proof: [["Amazon listing", "https://www.amazon.in/dp/9361858254"]]
+        },
+        {
+          id: "pixel", name: "Pixel and Aahan", real: "Pixel and Aahan: The Red Dot Anomaly (a CS and AI book for beginners)", price: "150 pages",
+          story: ["Pixel and Aahan: The Red Dot Anomaly follows a cast of quirky characters, one of them based on me, from \"What is a computer?\" all the way to machine learning and neural networks. It runs to 150 pages, with quizzes and games built in, and it needs no prior knowledge. Writing and brainstorming took three to four months, and the book grew out of Project P.A.R.S.E.'s mission."],
+          ingredients: [["50", "Storytelling"], ["40", "Computer science"], ["10", "Quizzes and games"]],
+          tasting: ["A 150-page CS and AI book for beginners.", "Available on Amazon."],
+          brewed: "2026", sweet: SWEET_TODO, proof: [["Amazon listing", "https://www.amazon.in/dp/B0GZV6KCVJ"]]
+        },
+        {
+          id: "atelic", name: "Atelic", real: "Atelic (poetry chapbook), published under the pen name aahan?", price: "Kindle + paperback",
+          story: ["Atelic is my first poetry chapbook, published on Amazon as a Kindle ebook and paperback under my pen name, aahan?. I write in free verse and odd formats, and the title comes from linguistics: an atelic verb describes an action with no built-in end point. The working title was Unfinished, which says the same thing with less grammar."],
+          ingredients: [["70", "Free verse"], ["30", "Unfinished thoughts"]],
+          tasting: ["Published in October 2026 on Kindle and in paperback."],
+          brewed: "October 2026", sweet: SWEET_TODO, proof: [["Amazon listing", "https://www.amazon.in/dp/B0HLT29XQC"]]
+        },
+        {
+          id: "writingwins", name: "Ink on Ice", real: "Winner, School Writing Competitions", price: "3 years",
+          story: ["I won my school's writing competitions in Grades 9, 10 and 11."],
+          ingredients: [["100", "Drafts"]],
+          tasting: ["Winner in Grades 9, 10 and 11."],
+          brewed: "Grades 9 to 11", sweet: SWEET_TODO, proof: []
+        }
+      ]
+    },
+    {
+      id: "burnt", title: "Burnt Batches", sub: "Rejections that led somewhere.", width: "w6", doodle: "envelope",
+      items: [
+        {
+          id: "inbox", name: "The Unanswered Inbox", real: "Cold Outreach for Mentorship and Feedback", price: "~1,100 sent",
+          inbox: true,
+          story: [
+            "With no researchers in my city working on what I wanted to study, I went looking. So far I've cold-contacted roughly 500 professors, 300 professionals and 300 students, asking for mentorship, feedback or a few minutes of their time. Most didn't reply, and many who did said no.",
+            "The few who said yes changed what I worked on. Himanshu Khale gave me an internship at SAAI. Dr. Mayur Jain pushed my Sindhi research further and mentored my music paper. Dr. Bhushan Jagyasi endorsed my arXiv submission."
+          ],
+          ingredients: [["90", "Emails and messages"], ["10", "Replies"]],
+          tasting: ["About 500 professors, 300 professionals and 300 students contacted."],
+          brewed: "2025 to now", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "novel", name: "Not Novel", real: "A Professor's Verdict on My First Sindhi Fine-Tune", price: "2 words",
+          story: ["My first Sindhi fine-tune earned a two-word verdict from a speech-recognition professor: not novel. I reread the email more times than I'll admit. Then I went back to the start, studied why the model was failing and ran nine ablations. The paper that came out of them is the preprint on Zenodo."],
+          ingredients: [["60", "Rereading the email"], ["40", "Going back to the start"]],
+          tasting: ["Led to the nine-ablation study (word error rate from 142.5% to 18.7%)."],
+          brewed: "September 2026", sweet: SWEET_TODO, proof: []
+        },
+        {
+          id: "rejections", name: "Three Rejections", real: "Google Play Review for SHEield", price: "3 × rejected",
+          story: ["Google Play rejected SHEield three times. Each rejection came with something to fix, and the app also had to pass a 14-day closed test with real testers. On the fourth application, it went live."],
+          ingredients: [["70", "Fixing what reviewers flagged"], ["30", "Fourteen days of testers"]],
+          tasting: ["Went live on Google Play after the fourth application."],
+          brewed: "2026", sweet: SWEET_TODO, proof: []
+        }
+      ]
+    }
+  ];
+
+  var SWEET = {
+    lyrics: "I asked an AI how a Kate Bush song feels. It said \"neutral.\" I have not recovered.",
+    hrtf: "I built the scientifically accurate version. Four out of seven people preferred the fake one. Science 3, vibes 4.",
+    medisec: "I joined to study medical devices and somehow became the group chat's project manager across time zones.",
+    eeg: "My model got every answer right and was still wrong about how sure it should be. Relatable.",
+    saai: "One cold email later, I was teaching a computer to have feelings about cricket commentary.",
+    curieux: "I asked 30 students how stressed they were. Handing them one more form probably didn't help.",
+    sheield: "An app about getting help fast took three rejections to get approved. I've made my peace with the irony.",
+    twofortwo: "Designer, developer and chief follow-up officer: several job titles, one laptop.",
+    parse: "A scammer pretended to be my dad, so I started a nonprofit. It felt like a reasonable reaction at the time.",
+    headboy: "Three interview rounds for the honour of making announcements nobody hears until the word \"holiday\" comes up.",
+    debate: "I founded a club where arguing is encouraged. My parents have noticed it travelling home with me.",
+    sat: "I teach the SAT for free, which is either generous or a slow revenge on the reading section.",
+    teaching: "Teaching people to spot scams: the only lesson where suspicion earns full marks.",
+    jci: "Three days of speeches, one trophy and barely any voice left.",
+    iitb: "The rain took day one. I took 5th place on day two. I'm calling it a draw.",
+    every: "Four years, four finals. The trophy shelf has started asking for a raise.",
+    poem: "Everyone brought Shakespeare. I brought a rose and my own poem, which was a bold way to meet the judges.",
+    cook: "Our secret ingredient was fewer ingredients.",
+    planetspark: "Featured once as a small child with big opinions about time, and once as a slightly bigger child with a thriller.",
+    thriller: "My first book was a psychological thriller. My family read it and has kept an eye on me ever since.",
+    pixel: "I wrote myself into a book as a character. I'm calling it research.",
+    atelic: "I named my poetry book after a grammar term. This is what computational linguistics does to a person.",
+    writingwins: "Three years of writing competitions. The pen did most of the work; I just held it.",
+    inbox: "About 1,100 cold emails. If you're a professor reading this, there's a fair chance we've already met.",
+    novel: "Two words from a professor did more for my research than any compliment. I've framed them, mentally.",
+    rejections: "Google Play and I had three difficult conversations before we found common ground."
+  };
+
+  var SPECIALS = [
+    ["bean", "I know about 150 cold coffee recipes. RUTH Brew is #58."],
+    ["uke", "I play a little ukulele and a little keyboard."],
+    ["grid", "My Wordle streak is still going, and so is my Scrabble habit."],
+    ["capsule", "I record video time capsules for my future self."],
+    ["dance", "I dance on stage, and I have since I was a child."],
+    ["knight", "I won a community chess tournament in Grade 10."],
+    ["plane", "I've travelled to the US and Dubai."],
+    ["tv", "I watch Friends on repeat. Could I BE any more of a Chandler?"],
+    ["dots", "My favourite punctuation mark is the ellipsis…"],
+    ["half", "I'm selectively extroverted."]
+  ];
+
+  /* Academics. Rows starting with two spaces are indented sub-rows. */
+  var NUTRITION = [
+    ["Class rank", "1 / 100"],
+    ["Grade 9", "88.63%"],
+    ["Grade 10 (board exams)", "98.80%"],
+    ["Grade 11", "99.83%"],
+    ["Grade 12", "projected 96%"],
+    ["SAT superscore", "1490"],
+    ["  Reading and Writing (Sep 2026)", "750"],
+    ["  Math (Nov 2025)", "740"],
+    ["IELTS Academic (Feb 2026)", "7.5"],
+    ["  Reading / Listening", "7 / 7.5"],
+    ["  Writing / Speaking", "7.5 / 8.5"],
+    ["TOEFL iBT (Oct 2026)", "5.5 of 6"],
+    ["  Reading / Listening", "5.5 / 5.5"],
+    ["  Writing / Speaking", "6 / 5"],
+    ["Grade 10 community topper", "yes"]
+  ];
+  var NUTRITION_FOOT = "Grades 9 and 10: Mount Carmel High School. Grades 11 and 12: Prof. Prakash Dawale Jr. College (Maharashtra State Board, Science). Also contains: a two-day AI/ML and agentic AI workshop at VNIT Nagpur, and Arduino Level 1 at KITS.";
+
+  /* ================= helpers ================= */
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") n.className = attrs[k];
+      else if (k === "text") n.textContent = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  var ITEMS = {};
+  var ORDER = ["lyrics"];
+  LYRICS.section = "House signature"; LYRICS.doodle = "note";
+  ITEMS.lyrics = LYRICS;
+  MENU.forEach(function (s) { s.items.forEach(function (it) { it.section = s.title; it.doodle = s.doodle; ITEMS[it.id] = it; ORDER.push(it.id); }); });
+  Object.keys(SWEET).forEach(function (k) { if (ITEMS[k]) ITEMS[k].sweet = SWEET[k]; });
+  function isTodo(t) { return /^\[/.test(t); }
+
+  function menuRow(it) {
+    var b = el("button", { class: "row", type: "button", "data-id": it.id, "aria-haspopup": "dialog", "aria-label": it.name + ". " + it.real + ". " + it.price + ". Read the story." }, [
+      el("span", { class: "label" }, [
+        el("span", { class: "name", text: it.name }),
+        el("span", { class: "small", text: it.real })
+      ]),
+      el("span", { class: "dots", "aria-hidden": "true" }),
+      el("span", { class: "price", text: it.price })
+    ]);
+    b.addEventListener("click", function () { openCard(it.id, b); });
+    return b;
+  }
+
+  /* ================= board ================= */
+  document.getElementById("sigRow").appendChild(menuRow(LYRICS));
+  var grid = document.getElementById("boardGrid");
+  MENU.forEach(function (s) {
+    var ul = el("ul", { class: "rows" });
+    s.items.forEach(function (it) { ul.appendChild(el("li", null, [menuRow(it)])); });
+    var h = el("h2", { id: "h-" + s.id }, [doodle(s.doodle), s.title]);
+    grid.appendChild(el("section", { class: "sec " + s.width, "aria-labelledby": "h-" + s.id }, [h, el("p", { class: "sub", text: s.sub }), ul]));
+  });
+
+  var sp = document.getElementById("specials");
+  SPECIALS.forEach(function (x) { sp.appendChild(el("li", null, [doodle(x[0]), el("span", { text: x[1] })])); });
+
+  var nf = document.getElementById("nutrition");
+  var dl = el("dl");
+  NUTRITION.forEach(function (r) {
+    var indent = r[0].indexOf("  ") === 0;
+    var dt = el("dt", { text: r[0].trim() });
+    if (indent) { dt.style.fontWeight = "400"; dt.style.paddingLeft = "14px"; }
+    dl.appendChild(el("div", { class: "nrow" }, [dt, el("dd", { text: r[1] })]));
+  });
+  nf.appendChild(el("h3", { text: "Nutrition Facts" }));
+  nf.appendChild(el("p", { class: "serving", text: "1 serving per applicant · Serving size: one student" }));
+  nf.appendChild(el("p", { class: "amt", text: "Amount per serving" }));
+  nf.appendChild(dl);
+  nf.appendChild(el("p", { class: "foot", text: NUTRITION_FOOT }));
+
+  /* ================= sugar ================= */
+  var sugar = "none";
+  document.querySelectorAll('input[name="sugar"]').forEach(function (r) {
+    r.addEventListener("change", function () { sugar = r.value; if (currentId) renderCard(currentId); });
+  });
+
+  /* ================= tray ================= */
+  var tray = [];
+  var countEl = document.getElementById("trayCount");
+  var checkoutBtn = document.getElementById("checkout");
+  function updateTray() { countEl.textContent = tray.length; checkoutBtn.disabled = tray.length === 0; }
+
+  /* ================= drink card ================= */
+  var panel = document.getElementById("panel");
+  var scrim = document.getElementById("scrim");
+  var currentId = null, returnFocus = null;
+
+  function renderCard(id) {
+    var it = ITEMS[id];
+    panel.textContent = "";
+    var close = el("button", { class: "btn close", type: "button", text: "Close" });
+    close.addEventListener("click", closeCard);
+    panel.appendChild(el("div", { class: "top" }, [el("p", { class: "section-tag" }, [doodle(it.doodle), it.section]), close]));
+    panel.appendChild(el("h2", { id: "panelTitle", text: it.name }));
+    panel.appendChild(el("p", { class: "real", text: it.real }));
+    panel.appendChild(el("span", { class: "price-tag", text: it.price }));
+
+    panel.appendChild(el("h3", { text: "The story" }));
+    var story = el("div", { class: "story" });
+    it.story.forEach(function (p) { story.appendChild(el("p", { class: isTodo(p) ? "placeholder" : "", text: p })); });
+    panel.appendChild(story);
+
+    if (sugar === "sweet") {
+      panel.appendChild(el("h3", { text: "Extra sweet" }));
+      var todo = isTodo(it.sweet);
+      panel.appendChild(el("p", { class: "sweet" + (todo ? " placeholder" : ""), text: todo ? "Aahan is still writing the extra sweet version of this one." : it.sweet }));
+    }
+
+    if (it.inbox) {
+      panel.appendChild(el("h3", { text: "The inbox" }));
+      panel.appendChild(el("div", { class: "inbox" }, [
+        el("div", null, [el("b", { text: "~500" }), el("span", { text: "professors" })]),
+        el("div", null, [el("b", { text: "~300" }), el("span", { text: "professionals" })]),
+        el("div", null, [el("b", { text: "~300" }), el("span", { text: "students" })])
+      ]));
+    }
+
+    panel.appendChild(el("h3", { text: "Tasting notes" }));
+    var t = el("ul", { class: "tasting" });
+    it.tasting.forEach(function (x) { t.appendChild(el("li", { text: x })); });
+    panel.appendChild(t);
+
+    panel.appendChild(el("h3", { text: "Ingredients" }));
+    var ing = el("ul", { class: "ingredients" });
+    it.ingredients.forEach(function (p) {
+      var fill = el("div", { class: "bar-fill", "aria-hidden": "true" }, [el("span")]);
+      fill.firstChild.style.width = Math.min(100, Number(p[0]) || 0) + "%";
+      ing.appendChild(el("li", null, [el("span", { class: "pct", text: p[0] + "%" }), el("div", null, [el("span", { text: p[1] }), fill])]));
+    });
+    panel.appendChild(ing);
+
+    if (it.brewed) {
+      panel.appendChild(el("h3", { text: "Brewed" }));
+      panel.appendChild(el("p", { class: "meta", text: it.brewed }));
+    }
+
+    if (it.proof && it.proof.length) {
+      panel.appendChild(el("h3", { text: "Proof" }));
+      var pl = el("ul", { class: "proof" });
+      it.proof.forEach(function (p) {
+        if (p[1]) pl.appendChild(el("li", null, [el("a", { href: p[1], target: "_blank", rel: "noopener", text: p[0] })]));
+        else pl.appendChild(el("li", null, [el("span", { text: p[0] + " " }), el("span", { class: "todo", text: "[ADD]" })]));
+      });
+      panel.appendChild(pl);
+    }
+
+    var inTray = tray.indexOf(id) !== -1;
+    var add = el("button", { class: "btn fill", type: "button", text: inTray ? "In your tray" : "Add to tray" });
+    if (inTray) add.disabled = true;
+    add.addEventListener("click", function () {
+      if (tray.indexOf(id) === -1) { tray.push(id); updateTray(); }
+      add.textContent = "In your tray"; add.disabled = true;
+    });
+    var nextId = ORDER[(ORDER.indexOf(id) + 1) % ORDER.length];
+    var next = el("button", { class: "btn", type: "button", text: "Next drink: " + ITEMS[nextId].name });
+    next.addEventListener("click", function () { currentId = nextId; renderCard(nextId); panel.scrollTop = 0; var c = panel.querySelector(".close"); if (c) c.focus(); });
+    panel.appendChild(el("div", { class: "actions" }, [add, next]));
+  }
+
+  function openCard(id, from) {
+    currentId = id; returnFocus = from || null;
+    renderCard(id);
+    panel.hidden = false; scrim.hidden = false;
+    panel.classList.remove("enter"); void panel.offsetWidth; panel.classList.add("enter");
+    panel.scrollTop = 0;
+    var c = panel.querySelector(".close"); if (c) c.focus();
+  }
+  function closeCard() {
+    panel.hidden = true; scrim.hidden = true; currentId = null;
+    if (returnFocus) returnFocus.focus();
+  }
+  scrim.addEventListener("click", closeCard);
+
+  /* ================= receipt ================= */
+  var rw = document.getElementById("receiptWrap");
+  function receiptText() {
+    var lines = ["aahan? café", "Akola, India", ""];
+    tray.forEach(function (id) { lines.push(ITEMS[id].name + "  " + ITEMS[id].price + "  (" + ITEMS[id].real + ")"); });
+    lines.push("", "Thank you for visiting.", "Refills available at lullaaahan888@gmail.com");
+    return lines.join("\n");
+  }
+  function openReceipt() {
+    rw.textContent = "";
+    var r = el("div", { class: "receipt" });
+    var order = String(1000 + Math.floor(Math.random() * 9000));
+    var date = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    var parts = [
+      el("div", { class: "center" }, [el("strong", { text: "aahan? café" })]),
+      el("div", { class: "center", text: "Akola, India" }),
+      el("div", { class: "rule" }),
+      el("div", { class: "line" }, [el("span", { text: "Order #" + order }), el("span", { text: date })]),
+      el("div", { class: "line" }, [el("span", { text: "Sugar" }), el("span", { text: sugar === "sweet" ? "Extra sweet" : "None" })]),
+      el("div", { class: "rule" })
+    ];
+    tray.forEach(function (id) {
+      var it = ITEMS[id];
+      parts.push(el("div", { class: "line" }, [el("span", { text: it.name }), el("span", { text: it.price })]));
+      parts.push(el("div", { text: "  " + it.real, style: "font-size:.78rem;opacity:.75" }));
+    });
+    parts.push(el("div", { class: "rule" }));
+    parts.push(el("div", { class: "line" }, [el("span", { text: "Items" }), el("span", { text: String(tray.length) })]));
+    parts.push(el("div", { class: "line" }, [el("span", { text: "Total" }), el("span", { text: "Priceless" })]));
+    parts.push(el("div", { class: "rule" }));
+    parts.push(el("div", { class: "center", text: "Thank you for visiting." }));
+    parts.push(el("div", { class: "center", text: "Refills available at" }));
+    parts.push(el("div", { class: "center", text: "lullaaahan888@gmail.com" }));
+    parts.forEach(function (p, i) { p.classList.add("feed"); p.style.animationDelay = (i * 70) + "ms"; r.appendChild(p); });
+
+    var msg = el("p", { class: "msg", role: "status" });
+    var copy = el("button", { class: "btn", type: "button", text: "Copy receipt" });
+    copy.addEventListener("click", function () {
+      try {
+        navigator.clipboard.writeText(receiptText()).then(function () { msg.textContent = "Copied."; }, function () { msg.textContent = "Couldn't copy. Select the receipt text instead."; });
+      } catch (e) { msg.textContent = "Couldn't copy. Select the receipt text instead."; }
+    });
+    var newOrder = el("button", { class: "btn", type: "button", text: "Start a new order" });
+    newOrder.addEventListener("click", function () { tray = []; updateTray(); closeReceipt(); });
+    var back = el("button", { class: "btn", type: "button", text: "Back to the menu" });
+    back.addEventListener("click", closeReceipt);
+    r.appendChild(el("div", { class: "receipt-actions" }, [copy, back, newOrder]));
+    r.appendChild(msg);
+    rw.appendChild(r);
+    rw.hidden = false;
+    back.focus();
+  }
+  function closeReceipt() { rw.hidden = true; checkoutBtn.focus(); }
+  checkoutBtn.addEventListener("click", openReceipt);
+  rw.addEventListener("click", function (e) { if (e.target === rw) closeReceipt(); });
+
+  /* ================= tip jar ================= */
+  var tipBtn = document.getElementById("tipBtn");
+  var tipjar = document.getElementById("tipjar");
+  tipBtn.addEventListener("click", function () {
+    tipjar.hidden = !tipjar.hidden;
+    tipBtn.setAttribute("aria-expanded", String(!tipjar.hidden));
+  });
+  document.getElementById("copyEmail").addEventListener("click", function (e) {
+    var b = e.currentTarget;
+    try {
+      navigator.clipboard.writeText("lullaaahan888@gmail.com").then(function () { b.textContent = "Copied"; }, selectEmail);
+    } catch (err) { selectEmail(); }
+  });
+  function selectEmail() {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById("emailAddr"));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+
+  /* ================= plain view ================= */
+  var plain = document.getElementById("plain");
+  var cafe = document.getElementById("cafe");
+  function buildPlain() {
+    plain.textContent = "";
+    var back = el("button", { class: "btn back", type: "button", text: "Back to the café" });
+    back.addEventListener("click", closeBill);
+    plain.appendChild(back);
+    plain.appendChild(el("h1", { text: "Aahan Lulla" }));
+    plain.appendChild(el("p", { class: "intro", text: "Akola, India. Applying for Computer Science and Computational Linguistics. Everything on one page; the café has the full stories." }));
+
+    var all = [{ title: "Research", items: [LYRICS].concat(MENU[0].items) }].concat(MENU.slice(1).map(function (s) { return { title: s.title, items: s.items }; }));
+    all.forEach(function (s) {
+      plain.appendChild(el("h2", { text: s.title }));
+      var ul = el("ul");
+      s.items.forEach(function (it) {
+        var li = el("li", null, [el("b", { text: it.real + ". " }), it.tasting.join(" ")]);
+        (it.proof || []).forEach(function (p) { if (p[1]) { li.appendChild(document.createTextNode(" ")); li.appendChild(el("a", { href: p[1], target: "_blank", rel: "noopener", text: p[0] })); } });
+        ul.appendChild(li);
+      });
+      plain.appendChild(ul);
+    });
+
+    plain.appendChild(el("h2", { text: "Academics" }));
+    var acad = el("ul");
+    NUTRITION.forEach(function (r) { acad.appendChild(el("li", { style: r[0].indexOf("  ") === 0 ? "margin-left:1.2em" : "" }, [el("b", { text: r[0].trim() + ": " }), r[1]])); });
+    acad.appendChild(el("li", { text: NUTRITION_FOOT }));
+    plain.appendChild(acad);
+
+
+    plain.appendChild(el("h2", { text: "Contact" }));
+    plain.appendChild(el("ul", null, [
+      el("li", null, ["Email: ", el("span", { class: "contact", text: "lullaaahan888@gmail.com" })]),
+      el("li", null, ["Instagram: ", el("a", { href: "https://instagram.com/aahanwrites_", target: "_blank", rel: "noopener", text: "@aahanwrites_" })]),
+      el("li", null, ["LinkedIn: ", el("a", { href: "https://www.linkedin.com/in/aahan-lulla-7b3ab135b/", target: "_blank", rel: "noopener", text: "Aahan Lulla" })]),
+      el("li", null, ["GitHub: ", el("a", { href: "https://github.com/lullaaahan888-dotcom", target: "_blank", rel: "noopener", text: "lullaaahan888-dotcom" })])
+    ]));
+  }
+  function openBill() {
+    buildPlain();
+    cafe.hidden = true; plain.hidden = false;
+    closeCard(); rw.hidden = true; tipjar.hidden = true;
+    window.scrollTo(0, 0);
+    try { history.replaceState(null, "", "#bill"); } catch (e) {}
+    var b = plain.querySelector(".back"); if (b) b.focus();
+  }
+  function closeBill() {
+    plain.hidden = true; cafe.hidden = false;
+    try { history.replaceState(null, "", "#menu"); } catch (e) {}
+    document.getElementById("openBill").focus();
+  }
+  document.getElementById("openBill").addEventListener("click", openBill);
+  if (location.hash === "#bill") openBill();
+
+  /* ================= keyboard ================= */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!rw.hidden) closeReceipt();
+    else if (!panel.hidden) closeCard();
+    else if (!tipjar.hidden) { tipjar.hidden = true; tipBtn.setAttribute("aria-expanded", "false"); tipBtn.focus(); }
+  });
+
+  updateTray();
+})();
+</script>
+
+</body>
+</html>
