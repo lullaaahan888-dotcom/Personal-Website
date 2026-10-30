@@ -196,7 +196,7 @@ button { font: inherit; color: inherit; }
 /* ---------- below the board ---------- */
 .below {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
   gap: 40px;
   margin-top: 46px;
   align-items: start;
@@ -224,6 +224,29 @@ button { font: inherit; color: inherit; }
 .nutrition dt { font-weight: 800; }
 .nutrition dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
 .nutrition .foot { border-top: 6px solid #111; font-size: .75rem; padding-top: 5px; margin: 4px 0 0; }
+.picks {
+  background: var(--board); color: var(--board-ink);
+  border-radius: 4px;
+  padding: 22px clamp(16px, 3vw, 32px) 24px;
+  display: grid; gap: 6px; align-content: start;
+}
+.below .picks h2 { display: flex; align-items: center; gap: 10px; color: var(--board-ink); }
+.below .picks h2 .dd { width: 30px; height: 30px; color: var(--yellow); }
+.below .picks .sub { color: var(--board-muted); margin-bottom: 8px; }
+.picks ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.pick {
+  display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; gap: 4px 14px; align-items: baseline;
+  width: 100%; text-align: left; cursor: pointer;
+  background: none; border: 0; border-top: 2px dotted var(--leader);
+  padding: 14px 0 12px; color: var(--board-ink);
+}
+.picks li:first-child .pick { border-top: 0; }
+.pick .no { font-family: var(--display); font-weight: 900; font-size: 2rem; line-height: .8; color: var(--yellow); }
+.pick .nm { font-family: var(--display); font-weight: 800; font-size: 1.4rem; text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; }
+.pick .why { grid-column: 2 / -1; font-size: .92rem; color: var(--board-muted); max-width: 60ch; }
+.pick .pr { font-family: var(--receipt); font-weight: 700; font-size: .9rem; white-space: nowrap; }
+.pick:hover .nm, .pick:focus-visible .nm { color: var(--yellow); }
+.picks .bill-cta { margin-top: 14px; justify-self: start; font-family: var(--hand); font-size: 1.15rem; color: var(--board-ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .nf-col { display: grid; gap: 14px; justify-items: start; }
 .nf-col .scribble { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--muted); }
 .nf-col .scribble .dd { width: 40px; height: 26px; color: var(--doodle); }
@@ -433,7 +456,7 @@ button { font: inherit; color: inherit; }
     <div class="intro">
       <p class="who">Aahan Lulla · Akola, India · Class of 2027</p>
       <h1>aahan? café</h1>
-      <p class="lede">Everything I've researched, built, written and said out loud, served as a menu. <strong>Every drink has a story behind it. Tap one to read it.</strong> The barista wasn't sure how to spell my name either.</p>
+      <p class="lede">Everything I've researched, built, written and said out loud, served as a menu. <strong>Every drink has a story behind it. Tap one to read it.</strong> And yes, the question mark in my name is on purpose.</p>
     </div>
     <div class="controls">
       <div class="sugar" role="group" aria-label="Sugar level">
@@ -477,6 +500,12 @@ button { font: inherit; color: inherit; }
         </div>
         <div class="nutrition" id="nutrition"></div>
         <p class="scribble"><span class="dd" data-doodle="arrowup" aria-hidden="true"></span>Read it like a real label.</p>
+      </section>
+      <section class="picks" aria-labelledby="picksTitle">
+        <h2 id="picksTitle"><span class="dd" data-doodle="star" aria-hidden="true"></span>Barista's Picks</h2>
+        <p class="sub">Only have two minutes? Order these first.</p>
+        <ol id="picks"></ol>
+        <button class="bill-cta" id="picksBill" type="button">Or skip the café and bring the bill.</button>
       </section>
     </div>
 
@@ -970,6 +999,26 @@ button { font: inherit; color: inherit; }
   });
 
 
+  var PICKS = [
+    ["sindhi", "Taught Whisper to write Sindhi in the right script; the error rate fell from 142.5% to 18.7%."],
+    ["lyrics", "Measured how badly sentiment models read songs, starting with Kate Bush."],
+    ["sheield", "A women's safety app, live on Google Play and presented to 225+ students."],
+    ["parse", "A nonprofit that makes tech less scary, now 75+ members in 3+ countries."],
+    ["hrtf", "Built real 3D audio, then learned listeners still prefer the fake kind."]
+  ];
+  var pk = document.getElementById("picks");
+  PICKS.forEach(function (x, n) {
+    var it = ITEMS[x[0]];
+    var b = el("button", { class: "pick", type: "button", "aria-haspopup": "dialog" }, [
+      el("span", { class: "no", text: String(n + 1), "aria-hidden": "true" }),
+      el("span", { class: "nm", text: it.name }),
+      el("span", { class: "pr", text: it.price }),
+      el("span", { class: "why", text: x[1] })
+    ]);
+    b.addEventListener("click", function () { openCard(it.id, b); });
+    pk.appendChild(el("li", null, [b]));
+  });
+
   var nf = document.getElementById("nutrition");
   var dl = el("dl");
   NUTRITION.forEach(function (r) {
@@ -1213,6 +1262,7 @@ button { font: inherit; color: inherit; }
     document.getElementById("openBill").focus();
   }
   document.getElementById("openBill").addEventListener("click", openBill);
+  document.getElementById("picksBill").addEventListener("click", openBill);
   if (location.hash === "#bill") openBill();
 
   /* ================= keyboard ================= */
