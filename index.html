@@ -222,6 +222,13 @@ button { font: inherit; color: inherit; }
 .nutrition dt { font-weight: 800; }
 .nutrition dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
 .nutrition .foot { border-top: 6px solid #111; font-size: .75rem; padding-top: 5px; margin: 4px 0 0; }
+.barista { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 4px 28px; align-items: start; }
+.barista h2, .barista .sub { grid-column: 1 / -1; }
+.polaroid { margin: 0; background: #FFFFFF; padding: 10px 10px 14px; box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 10px 18px -12px rgba(0,0,0,.45); transform: rotate(-2deg); max-width: 260px; }
+.polaroid img { display: block; width: 100%; height: auto; }
+.polaroid figcaption { font-family: var(--hand); color: #21160F; text-align: center; font-size: 1.15rem; margin-top: 8px; }
+.barista .bio { margin: 6px 0 0; max-width: 46ch; }
+@media (max-width: 640px) { .barista { grid-template-columns: minmax(0, 1fr); } .polaroid { max-width: 240px; } }
 .nf-col { display: grid; gap: 14px; justify-items: start; }
 .nf-col .scribble { display: flex; align-items: center; gap: 8px; font-family: var(--hand); color: var(--muted); }
 .nf-col .scribble .dd { width: 40px; height: 26px; color: var(--doodle); }
@@ -462,10 +469,14 @@ button { font: inherit; color: inherit; }
     </section>
 
     <div class="below">
-      <section class="specials" aria-labelledby="offTitle">
-        <h2 id="offTitle"><span class="dd" data-doodle="star" aria-hidden="true"></span>Off-Menu Specials</h2>
-        <p class="sub">Things I'd tell you if we shared a table.</p>
-        <ul id="specials"></ul>
+      <section class="barista" aria-labelledby="baristaTitle">
+        <h2 id="baristaTitle">Meet the barista</h2>
+        <p class="sub">The one who wrote every recipe on this board.</p>
+        <figure class="polaroid">
+          <img src="aahan.jpg" width="580" height="800" alt="Portrait of Aahan Lulla in his school blazer and tie">
+          <figcaption>Aahan Lulla, head barista</figcaption>
+        </figure>
+        <p class="bio">I'm a Grade 12 student from Akola, India, applying to study Computer Science and Computational Linguistics. I spend most of my time teaching machines to understand language, writing, speaking on stage, and making cold coffee.</p>
       </section>
       <section class="nf-col" aria-labelledby="nfTitle">
         <div>
@@ -966,8 +977,6 @@ button { font: inherit; color: inherit; }
     grid.appendChild(el("section", { class: "sec " + s.width, "aria-labelledby": "h-" + s.id }, [h, el("p", { class: "sub", text: s.sub }), ul]));
   });
 
-  var sp = document.getElementById("specials");
-  SPECIALS.forEach(function (x) { sp.appendChild(el("li", null, [doodle(x[0]), el("span", { text: x[1] })])); });
 
   var nf = document.getElementById("nutrition");
   var dl = el("dl");
