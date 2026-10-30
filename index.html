@@ -394,10 +394,30 @@ button { font: inherit; color: inherit; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
-  .sec.w7, .sec.w5, .sec.w6 { grid-column: span 12; }
+  .board-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .sec.w7, .sec.w5, .sec.w6 { grid-column: auto; }
   .below { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 640px) {
+  .board { padding: 16px 14px 18px; }
+  .row { flex-wrap: wrap; gap: 3px 8px; padding: 9px 0; }
+  .row .label { flex: 1 1 100%; }
+  .row .dots { display: none; }
+  .row .price { color: var(--yellow); font-size: .85rem; }
+  .signature { padding: 12px 12px 10px; }
+  .board-top { margin-bottom: 10px; }
+  .hint { font-size: 1.05rem; }
+  .sec h2 { font-size: 1.45rem; }
+  .pick { grid-template-columns: 1.8rem minmax(0, 1fr); }
+  .pick .pr { grid-column: 2; color: var(--yellow); font-size: .82rem; }
+  .pick .nm { font-size: 1.2rem; }
+  .picks { padding: 18px 14px 20px; }
+  .nutrition { max-width: 100%; width: 100%; }
+  .bar-inner { flex-wrap: nowrap; gap: 8px; }
+  .bar .tray-label { font-size: .95rem; white-space: nowrap; }
+  .bar .btn { padding: 6px 9px; font-size: .88rem; white-space: nowrap; }
+  .board-foot { gap: 10px; }
+  .board-foot .dd:nth-of-type(n+3) { display: none; }
   .counter { grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 12px 16px; padding-block: 18px 14px; }
   .counter .intro { grid-column: 1 / -1; }
   .barista { width: 108px; padding: 6px 6px 4px; }
